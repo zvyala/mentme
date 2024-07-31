@@ -14,7 +14,7 @@ struct BackgroundView: View {
             let height = geometry.size.height
 
             ZStack {
-                // Original shapes with updated colors
+                
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: height * 0.6))
                     path.addCurve(to: CGPoint(x: width, y: height * 0.4),
