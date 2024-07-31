@@ -13,7 +13,7 @@ struct RegisteredView: View {
     @State private var password = ""
     @State private var errorMessage = ""
     @State private var isLoggedIn = false
-    @State private var showingPasswordResetAlert = false // State to control showing the password reset alert
+    @State private var showingPasswordResetAlert = false 
 
     @StateObject var authManager = AuthManager()
 
@@ -103,10 +103,10 @@ struct RegisteredView: View {
         Auth.auth().sendPasswordReset(withEmail: email) { error in
             if let error = error {
                 print("Error sending password reset email:", error.localizedDescription)
-                // Handle error
+                
             } else {
                 print("Password reset email sent successfully!")
-                showingPasswordResetAlert = true // Show alert confirming email sent
+                showingPasswordResetAlert = true 
             }
         }
     }
