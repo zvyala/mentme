@@ -14,12 +14,11 @@ struct SettingsView: View {
     @State private var isLoggedIn = false
     @State private var selectedImage: UIImage?
     @State private var showingImagePicker = false
-    @State private var savedImageURL: URL? // To store the URL of the saved image
+    @State private var savedImageURL: URL? 
 
     var body: some View {
         NavigationView {
             ZStack {
-                // Your original background view (BackgroundView1 assumed)
                 BackgroundView1()
 
                 VStack {
@@ -29,11 +28,11 @@ struct SettingsView: View {
                         if let selectedImage = selectedImage {
                             Image(uiImage: selectedImage)
                                 .resizable()
-                                .aspectRatio(contentMode: .fill) // Ensure the image fills the frame
+                                .aspectRatio(contentMode: .fill) 
                                 .frame(width: 150, height: 150)
                                 .clipShape(Rectangle())
                         } else if let imageURL = savedImageURL {
-                            // Display saved image if available
+                            
                             AsyncImage(url: imageURL) { phase in
                                 switch phase {
                                     case .empty:
@@ -41,13 +40,13 @@ struct SettingsView: View {
                                     case .success(let image):
                                         image
                                             .resizable()
-                                            .aspectRatio(contentMode: .fill) // Ensure the image fills the frame
+                                            .aspectRatio(contentMode: .fill) 
                                             .frame(width: 150, height: 150)
                                             .clipShape(Rectangle())
                                     case .failure:
                                         Image(systemName: "person.circle.fill")
                                             .resizable()
-                                            .aspectRatio(contentMode: .fill) // Ensure the image fills the frame
+                                            .aspectRatio(contentMode: .fill) 
                                             .frame(width: 150, height: 150)
                                             .clipShape(Rectangle())
                                 }
@@ -55,7 +54,7 @@ struct SettingsView: View {
                         } else {
                             Image(systemName: "person.circle.fill")
                                 .resizable()
-                                .aspectRatio(contentMode: .fill) // Ensure the image fills the frame
+                                .aspectRatio(contentMode: .fill) 
                                 .frame(width: 150, height: 150)
                                 .clipShape(Rectangle())
                         }
@@ -86,8 +85,8 @@ struct SettingsView: View {
 
                         Text("email: \(user.email ?? "Unknown")")
                             .font(Font.custom("CoolveticaRG-Regular", size: 20))
-                            .padding(.top, 10) // Adjust vertical padding here
-                        // Add more user information here
+                            .padding(.top, 10) 
+                        
                     } else {
                         ProgressView("Loading...")
                     }
@@ -116,7 +115,7 @@ struct SettingsView: View {
                 fetchUserData()
             }
             .fullScreenCover(isPresented: $isLoggedIn) {
-                RegisteredView() // Navigation to registered view when logged out
+                RegisteredView() 
             }
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $selectedImage)
@@ -125,12 +124,12 @@ struct SettingsView: View {
     }
 
     func fetchUserData() {
-        // Obtain information from Firebase Auth
+        
         if let currentUser = Auth.auth().currentUser {
-            // If user is signed in
+          
             self.user = currentUser
 
-            // Check if image is already saved
+            
             checkIfImageExistsInFirebase()
         } else {
             // If no user signed in
@@ -140,8 +139,8 @@ struct SettingsView: View {
 
     func signOut() {
         do {
-            try Auth.auth().signOut() // Sign out the current user
-            isLoggedIn = true // Set isLoggedIn to true to trigger navigation
+            try Auth.auth().signOut() 
+            isLoggedIn = true 
         } catch {
             print("Error signing out:", error.localizedDescription)
         }
@@ -157,17 +156,14 @@ struct SettingsView: View {
         let storageRef = storage.reference()
         let profileImagesRef = storageRef.child("profile_images/\(user?.uid ?? "unknown_user_uid").jpg")
 
-        // Upload the file to the path "profile_images/user_uid.jpg"
+       
         let uploadTask = profileImagesRef.putData(imageData, metadata: nil) { metadata, error in
             guard let metadata = metadata else {
-                // Uh-oh, an error occurred!
                 print("Error uploading image:", error?.localizedDescription ?? "Unknown error")
                 return
             }
-            // Metadata contains file metadata such as size, content-type, etc.
             print("Image uploaded successfully. Metadata: \(metadata)")
             
-            // Once uploaded, update the savedImageURL
             profileImagesRef.downloadURL { (url, error) in
                 if let downloadURL = url {
                     savedImageURL = downloadURL
@@ -183,7 +179,6 @@ struct SettingsView: View {
 
         profileImagesRef.downloadURL { url, error in
             if let downloadURL = url {
-                // Image exists, update savedImageURL
                 savedImageURL = downloadURL
             }
         }
