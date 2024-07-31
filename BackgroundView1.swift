@@ -14,7 +14,6 @@ struct BackgroundView1: View {
             let height = geometry.size.height
 
             ZStack {
-                // First shape
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: height * 0.6))
                     path.addCurve(to: CGPoint(x: width, y: height * 0.4),
@@ -28,7 +27,6 @@ struct BackgroundView1: View {
                 }
                 .fill(Color(red: 0.8, green: 0.9, blue: 1.0).opacity(0.3))
 
-                // Second shape
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: height * 0.2))
                     path.addCurve(to: CGPoint(x: width, y: 0),
@@ -42,7 +40,6 @@ struct BackgroundView1: View {
                 }
                 .fill(Color(red: 0.9, green: 0.8, blue: 1.0).opacity(0.3))
 
-                // Third shape
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: height * 0.8))
                     path.addCurve(to: CGPoint(x: width, y: height * 0.6),
