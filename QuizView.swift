@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct QuizView: View {
-    @State private var selectedAnswers: [String] = [] //array holds chosen answers for settings view
+    @State private var selectedAnswers: [String] = [] 
     @State private var navigateToHomepage = false
 
     let questions = [
@@ -81,13 +81,13 @@ struct QuizView: View {
     }
 
     func selectAnswer(_ answer: String) {
-        if selectedQuestionIndex == 1 { //used this to allow users to pick multiple industries
+        if selectedQuestionIndex == 1 { 
             if selectedAnswers.contains(answer) {
                 selectedAnswers.removeAll { $0 == answer }
             } else {
                 selectedAnswers.append(answer)
             }
-        } else { //any other questions require 1 answer
+        } else { 
             selectedAnswers = [answer]
         }
     }
@@ -95,7 +95,7 @@ struct QuizView: View {
     func nextButtonAction() {
         if selectedQuestionIndex < questions.count - 1 {
             selectedQuestionIndex += 1
-            selectedAnswers = [] //deselect all answers when moving to the next question
+            selectedAnswers = [] 
         } else {
             navigateToHomepage = true
         }
