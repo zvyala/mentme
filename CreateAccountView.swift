@@ -16,23 +16,21 @@ struct CreateAccountView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var dateOfBirth = Date()
-    @State private var errorMessage = "" // State variable to hold error message
-    @State private var navigateToQuiz = false // State variable to control navigation to QuizView
-    @State private var navigateToRegisteredView = false // State variable to control navigation to RegisteredView
-
+    @State private var errorMessage = "" 
+    @State private var navigateToQuiz = false 
+    @State private var navigateToRegisteredView = false 
     var body: some View {
         NavigationView {
             ZStack {
-                BackgroundView() // Use your custom background view here
+                BackgroundView() 
 
                 VStack {
                     Text("create new account")
                         .font(.custom("Coolvetica", size: 36))
                         .padding(.top, 40)
-                        .padding(.bottom, 10) // Increased spacing after title
-
+                        .padding(.bottom, 10) 
                     Button(action: {
-                        // Navigate to RegisteredView
+                        
                         navigateToRegisteredView = true
                     }) {
                         Text("already have an account? log in here.")
@@ -54,7 +52,7 @@ struct CreateAccountView: View {
                         .cornerRadius(8)
                         .padding(.horizontal)
                         .autocapitalization(.none)
-                        .padding(.bottom, 5) // Decreased spacing after email textbox
+                        .padding(.bottom, 5) 
 
                     SecureField("Password", text: $password)
                         .padding()
@@ -88,29 +86,29 @@ struct CreateAccountView: View {
             }
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $navigateToQuiz) {
-                QuizView() // Navigate to QuizView
+                QuizView() 
             }
             .fullScreenCover(isPresented: $navigateToRegisteredView) {
-                RegisteredView() // Navigate to RegisteredView
+                RegisteredView() 
             }
         }
     }
 
     func signUp() {
-        // Implement sign up logic here
+        
         guard !name.isEmpty, !email.isEmpty, !password.isEmpty else {
             errorMessage = "Please enter name, email, and password"
             return
         }
 
-        // Perform sign up operation with user data
+        
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
-                // Handle sign up error
+               
                 errorMessage = "Error signing up: \(error.localizedDescription)"
                 print(errorMessage)
             } else {
-                // Sign up successful, navigate to QuizView
+                
                 print("Sign up successful!")
                 navigateToQuiz = true
             }
